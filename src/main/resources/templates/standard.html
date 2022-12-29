@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+
+    <script src='fullcalendar-6.0.2/dist/index.global.js'></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id='calendar'></div>
+<script>
+
+    var calendarEl = document.getElementById('calendar');
+    var request = $.ajax({
+      url: "/standard",
+      method: "GET"
+    });
+    request.done(function(data){
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: JSON.parse(data),
+        headerToolbar: {
+          center: 'addEventButton'
+        },
+        customButtons: {
+          addEventButton: {
+            text: 'add event',
+            click: function() {
+              location.href="/calendar";
+            }
+          }
+        }
+      });
+      calendar.render();
+    });
+
+</script>
+</body>
+</html>
