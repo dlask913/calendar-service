@@ -153,8 +153,13 @@ window.onload = function () {
                         <input th:field="*{title}" class="form-control form-control-lg border-0 add-todo-input bg-transparent rounded" type="text" placeholder="일정을 입력해주세요.">
                     </div>
 
-                    <div class="col-auto px-0 mx-0 mr-2">
+
+                    <div class="col-auto px-0 mx-0 mr-2" th:if="${#strings.isEmpty(calendarDto.id)}">
                         <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                    <div class="col-auto px-0 mx-0 mr-2" th:unless="${#strings.isEmpty(calendarDto.id)}">
+                        <button th:formaction="@{'/calendar/'+${calendarDto.id}}" type="submit" class="btn btn-primary">Update</button>
+                        <button th:formaction="@{'/calendar/'+${calendarDto.id}+'/delete'}" type="submit" class="btn btn-primary">Delete</button>
                     </div>
                 </div>
             </div>

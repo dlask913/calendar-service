@@ -85,6 +85,15 @@
 			<version>20220924</version>
 		</dependency>
 
+
+		<!--		로그인 테스트하기 전에 추가-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+			<version>${spring-security.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

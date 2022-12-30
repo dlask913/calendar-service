@@ -16,15 +16,15 @@ public class MainController {
 
      private final CalendarService calendarService;
 
-
     @RequestMapping(value = "/standard",method = RequestMethod.GET)
     @ResponseBody
     public String standard(Model model) throws JSONException {
         String res = calendarService.objectToJson();
-        System.out.println(">>>>>result");
-        System.out.println(res);
+//        System.out.println(">>>>>result");
+//        System.out.println(res);
         return res;
     }
+
     @GetMapping("/")
     public String standard(){
         return "standard";

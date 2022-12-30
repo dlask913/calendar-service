@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,12 @@ public class CalendarService {
     public void save(Calendar calendar) {
         calendarRepository.save(calendar);
     }
+
+    public Calendar findById(Long id){
+        Calendar calendar = calendarRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return calendar;
+    }
+
     public String objectToJson(){
         List<Calendar> calendars = calendarRepository.findAll();
         JSONArray jsonArray = new JSONArray();
@@ -27,6 +34,7 @@ public class CalendarService {
         for (Calendar c:
              calendars) {
             JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", c.getId());
             jsonObject.put("title", c.getTitle());
             jsonObject.put("start", c.getStartDate());
             jsonObject.put("end",c.getEndDate());
@@ -34,5 +42,16 @@ public class CalendarService {
         }
         String res = jsonArray.toString();
         return res;
+    }
+
+    public void updateCalendar(Calendar calendar){
+        Calendar res = findById(calendar.getId());
+        res.setTitle(calendar.getTitle());
+        res.setStartDate(calendar.getStartDate());
+        res.setEndDate(calendar.getEndDate());
+    }
+
+    public void deleteCalendar(Long id) {
+        calendarRepository.delete(findById(id));
     }
 }

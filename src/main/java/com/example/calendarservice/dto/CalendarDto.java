@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Getter @Setter
 public class CalendarDto {
+    private String id;
     private String title;
     @DateTimeFormat(pattern = "yyyy-MM-dd") @NotNull(message = "시작일을 입력해주세요")
     private LocalDate startDate;

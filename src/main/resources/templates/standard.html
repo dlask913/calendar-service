@@ -2,11 +2,11 @@
 <html lang='en'>
 <head>
     <meta charset='utf-8' />
-
     <script src='fullcalendar-6.0.2/dist/index.global.js'></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
+
 </head>
 <body>
 <div id='calendar'></div>
@@ -17,8 +17,22 @@
       url: "/standard",
       method: "GET"
     });
+
+    function formatDate(date) {
+        return (
+            date.getFullYear() +
+            '-' + ( (date.getMonth()+1) < 9 ? "0" + (date.getMonth()+1) : (date.getMonth()+1) ) +
+          	'-' + ( (date.getDate()) < 9 ? "0" + (date.getDate()) : (date.getDate()))
+        );
+    }
     request.done(function(data){
       var calendar = new FullCalendar.Calendar(calendarEl, {
+        eventClick: function(info) {
+          var eventObj = info.event;
+<!--          alert('Clicked ' + JSON.stringify(eventObj.id));-->
+          location.href='/calendar/'+eventObj.id;
+        },
+        height: 650,
         initialView: 'dayGridMonth',
         events: JSON.parse(data),
         headerToolbar: {
