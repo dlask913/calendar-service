@@ -36,7 +36,11 @@ public class CalendarService {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", c.getId());
             jsonObject.put("title", c.getTitle());
-            jsonObject.put("start", c.getStartDate());
+            if (c.getStartTime() != null){
+                jsonObject.put("start", c.getStartDate() + "T" + c.getStartTime());
+            } else {
+                jsonObject.put("start", c.getStartDate());
+            }
             jsonObject.put("end",c.getEndDate());
             jsonArray.put(jsonObject);
         }
@@ -49,6 +53,7 @@ public class CalendarService {
         res.setTitle(calendar.getTitle());
         res.setStartDate(calendar.getStartDate());
         res.setEndDate(calendar.getEndDate());
+        res.setStartTime(calendar.getStartTime());
     }
 
     public void deleteCalendar(Long id) {

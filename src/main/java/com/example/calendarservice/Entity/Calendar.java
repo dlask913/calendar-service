@@ -1,5 +1,6 @@
 package com.example.calendarservice.Entity;
 
+import com.example.calendarservice.dto.CalendarDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +17,6 @@ public class Calendar {
     private String title;
     private String startDate;
     private String endDate;
+    private String startTime;
+
 }

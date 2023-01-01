@@ -30,6 +30,7 @@ public class CalendarController {
         if (bindingResult.hasErrors()) {
             return "calendar/calendarForm";
         }
+        System.out.println("calendarDto.toString()>>"+calendarDto.getStartTime());
         ModelMapper mapper = new ModelMapper();
         Calendar calendar = mapper.map(calendarDto, Calendar.class);
         calendarService.save(calendar);

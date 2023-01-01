@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @Getter @Setter
@@ -16,4 +17,5 @@ public class CalendarDto {
     private LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd") @NotNull(message = "종료일을 입력해주세요")
     private LocalDate endDate;
+    private String startTime;
 }

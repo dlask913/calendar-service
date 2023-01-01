@@ -1,2 +1,2 @@
 # calendar-service
-to do list 만들기 ( calendar API + DB 연동 )
+일정 관리 웹 만들기 ( calendar API + DB 연동 )

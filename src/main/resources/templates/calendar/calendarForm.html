@@ -150,9 +150,13 @@ window.onload = function () {
                 </div>
                 <div class="row bg-white rounded shadow-sm p-2 add-todo-wrapper align-items-center justify-content-center">
                     <div class="col">
+                        <input th:field="*{startTime}" class="form-control form-control-lg border-0 add-todo-input bg-transparent rounded" type="time" placeholder="시작시간을 입력해주세요.">
+                    </div>
+                </div>
+                <div class="row bg-white rounded shadow-sm p-2 add-todo-wrapper align-items-center justify-content-center">
+                    <div class="col">
                         <input th:field="*{title}" class="form-control form-control-lg border-0 add-todo-input bg-transparent rounded" type="text" placeholder="일정을 입력해주세요.">
                     </div>
-
 
                     <div class="col-auto px-0 mx-0 mr-2" th:if="${#strings.isEmpty(calendarDto.id)}">
                         <button type="submit" class="btn btn-primary">Add</button>

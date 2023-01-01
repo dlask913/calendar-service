@@ -20,8 +20,8 @@ public class MainController {
     @ResponseBody
     public String standard(Model model) throws JSONException {
         String res = calendarService.objectToJson();
-//        System.out.println(">>>>>result");
-//        System.out.println(res);
+        System.out.println(">>>>>result");
+        System.out.println(res);
         return res;
     }
 
