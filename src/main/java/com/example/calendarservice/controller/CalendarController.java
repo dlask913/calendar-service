@@ -26,12 +26,17 @@ public class CalendarController {
     }
 
     @PostMapping("calendar")
-    public String transfer(@Valid CalendarDto calendarDto , BindingResult bindingResult, Model model){
+    public String newSchedule(@Valid CalendarDto calendarDto , BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             return "calendar/calendarForm";
         }
-        System.out.println("calendarDto.toString()>>"+calendarDto.getStartTime());
+        if (calendarDto.getStartDate().isAfter(calendarDto.getEndDate())) {
+            model.addAttribute("errorMessage", "시작일이 종료일보다 늦습니다.");
+            return "calendar/calendarForm";
+        }
+
         ModelMapper mapper = new ModelMapper();
+        calendarDto.setEndDate(calendarDto.getEndDate().plusDays(1));
         Calendar calendar = mapper.map(calendarDto, Calendar.class);
         calendarService.save(calendar);
         return  "redirect:/";

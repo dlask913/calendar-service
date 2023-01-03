@@ -36,7 +36,7 @@ public class CalendarService {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", c.getId());
             jsonObject.put("title", c.getTitle());
-            if (c.getStartTime() != null){
+            if (c.getStartTime() != null && !(c.getStartTime().isEmpty())){
                 jsonObject.put("start", c.getStartDate() + "T" + c.getStartTime());
             } else {
                 jsonObject.put("start", c.getStartDate());

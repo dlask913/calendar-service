@@ -1,61 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<script>
-window.onload = function () {
-    bootlint.showLintReportForCurrentDocument([], {
-        hasProblems: false,
-        problemFree: false
-    });
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
 
-    $('[data-toggle="tooltip"]').tooltip();
+    window.onload = function () {
 
-    function formatDate(date) {
-        return (
-            date.getFullYear() +
-            '-' + ( (date.getMonth()+1) < 9 ? "0" + (date.getMonth()+1) : (date.getMonth()+1) ) +
-          	'-' + ( (date.getDate()) < 9 ? "0" + (date.getDate()) : (date.getDate()))
-        );
-    }
+        bootlint.showLintReportForCurrentDocument([], {
+            hasProblems: false,
+            problemFree: false
+        });
 
-    var currentDate = formatDate(new Date());
+        $('[data-toggle="tooltip"]').tooltip();
 
-    $(".due-date-button").datepicker({
-        format: "yy-mm-dd",
-        autoclose: true,
-        todayHighlight: true,
-        startDate: currentDate,
-        orientation: "bottom right"
-    });
+        function formatDate(date) {
+            return (
+                date.getFullYear() +
+                '-' + ( (date.getMonth()+1) < 9 ? "0" + (date.getMonth()+1) : (date.getMonth()+1) ) +
+                '-' + ( (date.getDate()) < 9 ? "0" + (date.getDate()) : (date.getDate()))
+            );
+        }
 
-    $(".start-date-button").datepicker({
-        format: "yy-mm-dd",
-        autoclose: true,
-        todayHighlight: true,
-        startDate: currentDate,
-        orientation: "bottom right"
-    });
+        $(function(){
+            var errorMessage = [[${errorMessage}]];
+            if(errorMessage != null) { alert(errorMessage); }
+        });
 
-    $(".due-date-button").on("click", function (event) {
-        $(".due-date-button")
-            .datepicker("show")
-            .on("changeDate", function (dateChangeEvent) {
-                $(".due-date-button").datepicker("hide");
-                $(".due-date-label").text(formatDate(dateChangeEvent.date));
-                $('#end-date').attr('value', formatDate(dateChangeEvent.date));
-            });
-    });
+        var currentDate = formatDate(new Date());
 
-    $(".start-date-button").on("click", function (event) {
-        $(".start-date-button")
-            .datepicker("show")
-            .on("changeDate", function (dateChangeEvent) {
-                $(".start-date-button").datepicker("hide");
-                $(".start-date-label").text(formatDate(dateChangeEvent.date));
-                $('#start-date').attr('value', formatDate(dateChangeEvent.date));
-            });
-    });
-};
-</script>
+        $(".due-date-button").datepicker({
+            format: "yy-mm-dd",
+            autoclose: true,
+            todayHighlight: true,
+            startDate: currentDate,
+            orientation: "bottom right"
+        });
+
+        $(".start-date-button").datepicker({
+            format: "yy-mm-dd",
+            autoclose: true,
+            todayHighlight: true,
+            startDate: currentDate,
+            orientation: "bottom right"
+        });
+
+        $(".due-date-button").on("click", function (event) {
+            $(".due-date-button")
+                .datepicker("show")
+                .on("changeDate", function (dateChangeEvent) {
+                    $(".due-date-button").datepicker("hide");
+                    $(".due-date-label").text(formatDate(dateChangeEvent.date));
+                    document.getElementById("end-date").value = formatDate(dateChangeEvent.date);
+                });
+        });
+
+        $(".start-date-button").on("click", function (event) {
+            $(".start-date-button")
+                .datepicker("show")
+                .on("changeDate", function (dateChangeEvent) {
+                    $(".start-date-button").datepicker("hide");
+                    $(".start-date-label").text(formatDate(dateChangeEvent.date));
+                    document.getElementById("start-date").value = formatDate(dateChangeEvent.date);
+                });
+        });
+    };
+    </script>
+</th:block>
 
 <th:block layout:fragment="css">
     <style>
