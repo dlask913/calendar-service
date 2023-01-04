@@ -14,7 +14,11 @@ public class Member {
     private Long id;
     private String email;
     private String password;
-    private String company;  // 소속 , 같은 소속끼리 일정 공유
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    private MemberGroup memberGroup;   // 소속 , 같은 소속끼리 일정 공유
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 

@@ -1,7 +1,9 @@
 package com.example.calendarservice.controller;
 
 import com.example.calendarservice.Entity.Member;
+import com.example.calendarservice.Entity.Role;
 import com.example.calendarservice.dto.MemberDto;
+import com.example.calendarservice.dto.MemberFormDto;
 import com.example.calendarservice.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -33,18 +35,33 @@ public class MemberController {
         ModelMapper mapper = new ModelMapper();
 
         Member member = mapper.map(memberDto, Member.class);
+        member.setRole(Role.USER);
+        memberService.save(member);
+        return "redirect:/";
+    }
+
+    @PostMapping("/member/new/admin")
+    public String newAdminMember(@Valid MemberDto memberDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "member/memberForm";
+        }
+
+        ModelMapper mapper = new ModelMapper();
+
+        Member member = mapper.map(memberDto, Member.class);
+        member.setRole(Role.ADMIN);
         memberService.save(member);
         return "redirect:/";
     }
 
     @GetMapping("/member/login")
     public String loginForm(Model model) {
-        model.addAttribute("memberDto", new MemberDto());
+        model.addAttribute("memberFormDto", new MemberFormDto());
         return "member/loginForm";
     }
 
     @PostMapping("/member/login")
-    public String loginMember(MemberDto memberDto) {
+    public String loginMember(MemberFormDto memberFormDto) {
 
         return "redirect:/";
     }

@@ -18,5 +18,4 @@ public class Calendar {
     private String startDate;
     private String endDate;
     private String startTime;
-
 }
