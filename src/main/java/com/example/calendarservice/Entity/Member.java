@@ -2,11 +2,12 @@ package com.example.calendarservice.Entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity @Table(name = "member")
-@Getter @Setter
+@Getter @Setter @ToString
 public class Member {
 
     @Id @Column(name = "member_id")
@@ -14,10 +15,11 @@ public class Member {
     private Long id;
     private String email;
     private String password;
+    private String userName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
-    private MemberGroup memberGroup;   // 소속 , 같은 소속끼리 일정 공유
+    private Team team;   // 소속 , 같은 소속끼리 일정 공유
 
     @Enumerated(value = EnumType.STRING)
     private Role role;

@@ -7,16 +7,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Table(name = "group")
+@Entity @Table(name = "team")
 @Getter @Setter
-public class MemberGroup {
-    @Id @Column(name = "group_id")
+public class Team {
+    @Id @Column(name = "team_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String groupName;
-    private String groupCode;
+    private String teamName;
+    private String teamCode;
 
-    @OneToMany(mappedBy = "memberGroup", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 }

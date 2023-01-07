@@ -53,22 +53,22 @@
 <div class="tab-content">
 
     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-        <form action="/member/login" role="form" method="post" th:objet="${memberFormDto}">
+        <form action="/member/login" role="form" method="get" th:objet="${memberFormDto}">
             <!-- Email input -->
             <div class="form-outline mb-4">
-                <input type="email" id="loginName" class="form-control" />
-                <label class="form-label" for="loginName">Email</label>
+                <input type="email" class="form-control" name="email" th:field="*{memberFormDto.email}" placeholder="이메일">
+                <label class="form-label">Email</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
-                <input type="password" id="loginPassword" class="form-control" />
-                <label class="form-label" for="loginPassword">Password</label>
+                <input type="password" th:field="*{memberFormDto.password}" class="form-control" />
+                <label class="form-label">Password</label>
             </div>
 
             <!-- group code input -->
             <div class="form-outline mb-4">
-                <input type="text" class="form-control" />
+                <input type="text" th:field="*{memberFormDto.teamCode}" class="form-control" />
                 <label class="form-label">Group Code</label>
             </div>
 
@@ -93,25 +93,25 @@
         <form action="/member/new" role="form" method="post" th:objet="${memberDto}">
             <!-- Username input -->
             <div class="form-outline mb-4">
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" th:field="*{memberDto.userName}"/>
                 <label class="form-label" >Username</label>
             </div>
 
             <!-- Email input -->
             <div class="form-outline mb-4">
-                <input type="email" id="registerEmail" class="form-control" />
+                <input type="email" id="registerEmail" class="form-control" th:field="*{memberDto.email}" />
                 <label class="form-label" for="registerEmail">Email</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
-                <input type="password" id="registerPassword" class="form-control" />
+                <input type="password" id="registerPassword" class="form-control" th:field="*{memberDto.password}" />
                 <label class="form-label" for="registerPassword">Password</label>
             </div>
 
             <!-- group input -->
             <div class="form-outline mb-4">
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" th:field="*{memberDto.team}"/>
                 <label class="form-label">Group</label>
             </div>
 
@@ -132,31 +132,31 @@
         <form action="/member/new/admin" role="form" method="post" th:objet="${memberDto}">
             <!-- Username input -->
             <div class="form-outline mb-4">
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" th:field="*{memberDto.userName}"/>
                 <label class="form-label" >Username</label>
             </div>
 
             <!-- Email input -->
             <div class="form-outline mb-4">
-                <input type="email" class="form-control" />
+                <input type="email" class="form-control" th:field="*{memberDto.email}"/>
                 <label class="form-label" >Email</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
-                <input type="password" class="form-control" />
+                <input type="password" class="form-control" th:field="*{memberDto.password}"/>
                 <label class="form-label">Password</label>
             </div>
 
             <!-- group input -->
             <div class="form-outline mb-4">
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" th:field="*{memberDto.team}"/>
                 <label class="form-label">Group</label>
             </div>
 
             <!-- group input -->
             <div class="form-outline mb-4">
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" th:field="*{memberDto.teamCode}"/>
                 <label class="form-label">Group Code</label>
             </div>
 
