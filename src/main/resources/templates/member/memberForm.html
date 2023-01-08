@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<!--사용자 스크립트-->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            var errorMessage = [[${errorMessage}]];
+            if(errorMessage != null) { alert(errorMessage); }
+        });
+
+    </script>
+</th:block>
 <head>
     <meta charset="UTF-8">
     <!-- Font Awesome -->
@@ -53,7 +63,7 @@
 <div class="tab-content">
 
     <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-        <form action="/member/login" role="form" method="get" th:objet="${memberFormDto}">
+        <form action="/member/login" role="form" method="post" th:objet="${memberFormDto}">
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <input type="email" class="form-control" name="email" th:field="*{memberFormDto.email}" placeholder="이메일">
@@ -81,6 +91,7 @@
             </div>
 
             <!-- Submit button -->
+            <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
             <button type="submit" class="btn btn-primary btn-block mb-4">Log in</button>
 
             <!-- Register buttons -->
@@ -95,24 +106,31 @@
             <div class="form-outline mb-4">
                 <input type="text" class="form-control" th:field="*{memberDto.userName}"/>
                 <label class="form-label" >Username</label>
+                <p th:if="${#fields.hasErrors('memberDto.userName')}" th:errors="*{memberDto.userName}" class="fieldError">Incorrect data</p>
             </div>
 
             <!-- Email input -->
             <div class="form-outline mb-4">
                 <input type="email" id="registerEmail" class="form-control" th:field="*{memberDto.email}" />
                 <label class="form-label" for="registerEmail">Email</label>
+                <p th:if="${#fields.hasErrors('memberDto.email')}" th:errors="*{memberDto.email}" class="fieldError">Incorrect data</p>
+
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4">
                 <input type="password" id="registerPassword" class="form-control" th:field="*{memberDto.password}" />
                 <label class="form-label" for="registerPassword">Password</label>
+                <p th:if="${#fields.hasErrors('memberDto.password')}" th:errors="*{memberDto.password}" class="fieldError">Incorrect data</p>
+
             </div>
 
             <!-- group input -->
             <div class="form-outline mb-4">
                 <input type="text" class="form-control" th:field="*{memberDto.team}"/>
                 <label class="form-label">Group</label>
+                <p th:if="${#fields.hasErrors('memberDto.team')}" th:errors="*{memberDto.team}" class="fieldError">Incorrect data</p>
+
             </div>
 
             <!-- Checkbox -->

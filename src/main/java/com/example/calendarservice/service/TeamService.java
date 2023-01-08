@@ -1,7 +1,6 @@
 package com.example.calendarservice.service;
 
 import com.example.calendarservice.Entity.Team;
-import com.example.calendarservice.dto.TeamDto;
 import com.example.calendarservice.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

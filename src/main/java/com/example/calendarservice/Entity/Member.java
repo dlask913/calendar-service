@@ -13,6 +13,7 @@ public class Member {
     @Id @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String email;
     private String password;
     private String userName;

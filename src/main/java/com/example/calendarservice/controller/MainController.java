@@ -25,10 +25,10 @@ public class MainController {
         return res;
     }
 
-    @GetMapping("/")
-    public String standard(){
-        return "standard";
-    }
+//    @GetMapping("/")
+//    public String standard(){
+//        return "standard";
+//    }
 
     @GetMapping("/premium")
     public String premium(){

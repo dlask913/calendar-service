@@ -20,12 +20,17 @@ public class CalendarController {
     private final CalendarService calendarService;
 
     @GetMapping("calendar")
+    public String standardCalendar(){
+        return "standard";
+    }
+
+    @GetMapping("calendar/new")
     public String inputForm(Model model){
         model.addAttribute("calendarDto", new CalendarDto());
         return "calendar/calendarForm";
     }
 
-    @PostMapping("calendar")
+    @PostMapping("calendar/new")
     public String newSchedule(@Valid CalendarDto calendarDto , BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()) {
             return "calendar/calendarForm";

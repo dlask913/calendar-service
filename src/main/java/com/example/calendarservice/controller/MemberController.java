@@ -5,11 +5,11 @@ import com.example.calendarservice.Entity.Role;
 import com.example.calendarservice.Entity.Team;
 import com.example.calendarservice.dto.MemberDto;
 import com.example.calendarservice.dto.MemberFormDto;
-import com.example.calendarservice.dto.TeamDto;
 import com.example.calendarservice.service.MemberService;
 import com.example.calendarservice.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,9 +23,10 @@ import javax.validation.Valid;
 public class MemberController {
     private final MemberService memberService;
     private final TeamService teamService;
+    private final PasswordEncoder passwordEncoder;
 
 
-    @GetMapping(value = {"/member/new","member/login"})
+    @GetMapping(value = {"/","member/login"})
     public String memberForm(Model model) {
         model.addAttribute("memberDto", new MemberDto());
         model.addAttribute("memberFormDto", new MemberFormDto());
@@ -33,10 +34,10 @@ public class MemberController {
     }
 
     @PostMapping("/member/new")
-    public String newMember(MemberDto memberDto) {
-//        if (bindingResult.hasErrors()) {
-//            return "member/memberForm";
-//        }
+    public String newMember(@Valid MemberDto memberDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "member/memberForm";
+        }
         System.out.println("memberDto>>>" + memberDto.getEmail());
         System.out.println("memberDto>>>" + memberDto.getTeam());
         System.out.println("memberDto>>>" + memberDto.getPassword());
@@ -48,7 +49,7 @@ public class MemberController {
         Member member = mapper.map(memberDto, Member.class);
         member.setRole(Role.USER);
         member.setTeam(team);
-        memberService.save(member);
+        memberService.save(member,passwordEncoder);
         return "redirect:/";
     }
 
@@ -60,28 +61,29 @@ public class MemberController {
 
         ModelMapper mapper = new ModelMapper();
 
-        TeamDto teamDto = new TeamDto();
-        teamDto.setTeamCode(memberDto.getTeamCode());
-        teamDto.setTeamName(memberDto.getTeam());
+        Team team = new Team();
+        team.setTeamCode(memberDto.getTeamCode());
+        team.setTeamName(memberDto.getTeam());
 
-        Team team = mapper.map(teamDto, Team.class);
-        teamService.saveTeam(team);
-
-        Member member =mapper.map(memberDto, Member.class);
+        Member member = mapper.map(memberDto, Member.class);
         member.setTeam(team);
         member.setRole(Role.ADMIN);
         System.out.println("member>>>>"+member.toString());
-        memberService.save(member);
+
+
+        team.getMembers().add(member);
+        teamService.saveTeam(team);
+        memberService.save(member,passwordEncoder);
         return "redirect:/";
     }
 
-
-    @PostMapping("/member/login")
-    public String loginMember(MemberFormDto memberFormDto) {
-//        if (bindingResult.hasErrors()) {
-//            return "member/memberForm";
-//        }
-
-        return "redirect:/";
+    @GetMapping(value = "/member/login/error")
+    public String loginError(Model model) {
+        model.addAttribute("memberDto", new MemberDto());
+        model.addAttribute("memberFormDto", new MemberFormDto());
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+        model.addAttribute("errorMessage", "아이디 또는 비밀번호를 확인해주세요.");
+        return "member/memberForm";
     }
+
 }
