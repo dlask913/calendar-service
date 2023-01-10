@@ -5,6 +5,7 @@ import com.example.calendarservice.Entity.Role;
 import com.example.calendarservice.Entity.Team;
 import com.example.calendarservice.dto.MemberDto;
 import com.example.calendarservice.dto.MemberFormDto;
+import com.example.calendarservice.dto.TeamDto;
 import com.example.calendarservice.service.MemberService;
 import com.example.calendarservice.service.TeamService;
 import lombok.RequiredArgsConstructor;
@@ -33,25 +34,15 @@ public class MemberController {
         return "member/memberForm";
     }
 
-    @PostMapping("/member/new")
-    public String newMember(@Valid MemberDto memberDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "member/memberForm";
-        }
-        System.out.println("memberDto>>>" + memberDto.getEmail());
-        System.out.println("memberDto>>>" + memberDto.getTeam());
-        System.out.println("memberDto>>>" + memberDto.getPassword());
-
-
-        ModelMapper mapper = new ModelMapper();
-
-        Team team = teamService.findByName(memberDto.getTeam());
-        Member member = mapper.map(memberDto, Member.class);
-        member.setRole(Role.USER);
-        member.setTeam(team);
-        memberService.save(member,passwordEncoder);
-        return "redirect:/";
-    }
+//    @PostMapping("/member/new")
+//    public String newMember(@Valid MemberDto memberDto, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "member/memberForm";
+//        }
+//
+//        memberService.save(memberDto,passwordEncoder);
+//        return "redirect:/";
+//    }
 
     @PostMapping("/member/new/admin")
     public String newAdminMember(MemberDto memberDto) {
@@ -59,21 +50,13 @@ public class MemberController {
 //            return "member/memberForm";
 //        }
 
-        ModelMapper mapper = new ModelMapper();
+        TeamDto teamDto = new TeamDto();
+        teamDto.setTeamName(memberDto.getTeam());
+        teamDto.setTeamCode(memberDto.getTeamCode());
 
-        Team team = new Team();
-        team.setTeamCode(memberDto.getTeamCode());
-        team.setTeamName(memberDto.getTeam());
+        Long teamId = teamService.saveTeam(teamDto);
 
-        Member member = mapper.map(memberDto, Member.class);
-        member.setTeam(team);
-        member.setRole(Role.ADMIN);
-        System.out.println("member>>>>"+member.toString());
-
-
-        team.getMembers().add(member);
-        teamService.saveTeam(team);
-        memberService.save(member,passwordEncoder);
+        memberService.saveAdmin(memberDto,passwordEncoder,teamId);
         return "redirect:/";
     }
 
